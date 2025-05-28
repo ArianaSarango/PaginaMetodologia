@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Integrador de Artículos Científicos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Definición de variables de color para fácil manejo */
+            --primary-color: #2a9d8f; /* Teal oscuro */
+            --secondary-color: #e9c46a; /* Amarillo suave */
+            --accent-color: #f4a261; /* Naranja/Coral */
+            --text-dark: #264653; /* Azul verdoso muy oscuro */
+            --text-light: #fefae0; /* Crema claro */
+            --bg-light: #f7f7f7; /* Gris muy claro */
+            --bg-medium: #e0e0e0; /* Gris medio */
+            --bg-dark: #264653; /* Igual que text-dark para fondo de elementos oscuros */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px var(--shadow-medium);
+            position: relative;
+            overflow: hidden; /* Para el efecto de ondas si se agrega */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3.2em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-top: 10px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            flex-grow: 1; /* Permite que el contenedor crezca y ocupe espacio disponible */
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 12px;
+            margin-top: 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: var(--text-dark);
+            margin-top: 28px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        ul li {
+            background-color: var(--bg-medium);
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-left: 6px solid var(--accent-color);
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            color: var(--text-dark);
+        }
+
+        ul li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+
+        /* Estilos para pestañas */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--bg-medium);
+            padding-bottom: 10px;
+            gap: 15px; /* Espacio entre botones */
+        }
+
+        .tab-button {
+            background-color: var(--bg-medium);
+            border: 1px solid var(--bg-medium);
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05em;
+            color: var(--text-dark);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px var(--shadow-light);
+        }
+
+        .tab-button:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px var(--shadow-medium);
+            transform: translateY(0); /* Reiniciar transformación para el activo */
+        }
+
+        .tab-content {
+            display: none;
+            padding: 25px 0;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.8s ease-out; /* Animación para la aparición del contenido */
+        }
+
+        /* Animación de desvanecimiento */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            font-size: 0.95em;
+            box-shadow: 0 -4px 8px var(--shadow-medium);
+        }
+
+        footer p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+            .tab-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .tab-button {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+            header p {
+                font-size: 0.9em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            .tab-button {
+                font-size: 0.9em;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Resumen Ampliado e Integrador</h1>
+        <p>Transformando el conocimiento académico en materiales significativos</p>
+    </header>
+
+    <div class="container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab(event, 'introductorio')">Nivel Introductorio</button>
+            <button class="tab-button" onclick="openTab(event, 'tecnico')">Nivel Técnico</button>
+            <button class="tab-button" onclick="openTab(event, 'reflexivo')">Nivel Reflexivo</button>
+        </div>
+
+        <div id="introductorio" class="tab-content active">
+            <h2>Nivel Introductorio: Comprendiendo el Panorama</h2>
+            {{ resumen.introductorio | safe }}
+        </div>
+
+        <div id="tecnico" class="tab-content">
+            <h2>Nivel Técnico: Detalles y Conceptos Clave</h2>
+            {{ resumen.tecnico | safe }}
+        </div>
+
+        <div id="reflexivo" class="tab-content">
+            <h2>Nivel Reflexivo: Análisis Crítico y Conexiones</h2>
+            {{ resumen.reflexivo | safe }}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Resumen de Artículos Científicos. Todos los derechos reservados.</p>
+        <p>Desarrollado con fines educativos y de divulgación.</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            // Oculta todo el contenido de las pestañas
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove('active'); // Remover clase 'active' para ocultar
+            }
+
+            // Desactiva todos los botones de las pestañas
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove('active'); // Remover clase 'active'
+            }
+
+            // Muestra la pestaña actual y activa su botón
+            document.getElementById(tabName).classList.add('active'); // Añadir clase 'active' para mostrar
+            evt.currentTarget.classList.add('active'); // Añadir clase 'active' al botón clickeado
+        }
+    </script>
+</body>
+</html>
